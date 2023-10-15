@@ -31,9 +31,7 @@ public class VideoService {
             throw new ValidacaoException("Dados já cadastrado no banco de dados!");
         }
 
-        Video video = new Video(dto);
-        videoRepository.save(video);
+        return videoRepository.save(new Video(dto));
 
-        return video;
     }
 }

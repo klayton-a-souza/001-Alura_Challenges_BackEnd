@@ -30,15 +30,10 @@ public class VideoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid CadastrarVideoDto dto
-            ,UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity cadastrar(@RequestBody @Valid CadastrarVideoDto dto, UriComponentsBuilder builder){
         try {
-
-            Video video = videoService.cadastrar(dto);
-
-            var uri = uriComponentsBuilder.path("/videos{id_video}").buildAndExpand(video.getId_video()).toUri();
-            return ResponseEntity.created(uri).body(new CadastrarVideoDto(video));
-
+            var uri = builder.path("/videos{id_video").buildAndExpand(dto.id_video()).toUri();
+            return ResponseEntity.created(uri).body(videoService.cadastrar(dto));
         }catch (ValidacaoException exception){
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
