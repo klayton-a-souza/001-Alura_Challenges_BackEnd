@@ -1,5 +1,6 @@
 package aluraFlix.API.model;
 
+import aluraFlix.API.dto.CadastrarVideoDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,10 @@ public class Video {
     private String url;
     private Boolean ativo;
 
+    public Video(CadastrarVideoDto dto) {
+        this.titulo = dto.titulo();
+        this.descricao = dto.descricao();
+        this.url = dto.url();
+        this.ativo = true;
+    }
 }
