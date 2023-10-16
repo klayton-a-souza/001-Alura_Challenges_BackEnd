@@ -53,4 +53,13 @@ public class VideoService {
 
         return video;
     }
+
+    public Video atualizacao(AtualizarVideoDto dto) {
+        if(!videoRepository.existsById(dto.id_video())){
+            throw new ValidacaoException("Não foi possivel encontrar esses vídeo no banco de dados");
+        }
+        Video video = videoRepository.getReferenceById(dto.id_video());
+        video.atualizacao(dto);
+        return video;
+    }
 }

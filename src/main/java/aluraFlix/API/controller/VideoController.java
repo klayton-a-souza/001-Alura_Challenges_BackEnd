@@ -61,4 +61,13 @@ public class VideoController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizacao(@RequestBody @Valid AtualizarVideoDto dto){
+        try{
+            return ResponseEntity.ok(new AtualizarVideoDto(videoService.atualizacao(dto)));
+        }catch (ValidacaoException exception){
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
