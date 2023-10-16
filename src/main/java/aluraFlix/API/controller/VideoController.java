@@ -9,7 +9,6 @@ import aluraFlix.API.service.VideoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -66,6 +65,17 @@ public class VideoController {
     public ResponseEntity atualizacao(@RequestBody @Valid AtualizarVideoDto dto){
         try{
             return ResponseEntity.ok(new AtualizarVideoDto(videoService.atualizacao(dto)));
+        }catch (ValidacaoException exception){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id_video}/")
+    @Transactional
+    public ResponseEntity deletar(@PathVariable @Valid Long id_video){
+        try {
+            videoService.deletar(id_video);
+            return ResponseEntity.noContent().build();
         }catch (ValidacaoException exception){
             return ResponseEntity.notFound().build();
         }

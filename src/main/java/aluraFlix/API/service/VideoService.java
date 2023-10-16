@@ -62,4 +62,19 @@ public class VideoService {
         video.atualizacao(dto);
         return video;
     }
+
+    public void deletar(Long id_video) {
+        if(validar(id_video)){
+            throw new ValidacaoException("Não foi possivel encontrar esses vídeo no banco de dados");
+        }
+        Video video = videoRepository.getReferenceById(id_video);
+        video.deletar();
+    }
+
+    private Boolean validar(Long id_video){
+        if(videoRepository.existsById(id_video)){
+            return false;
+        }
+        return true;
+    }
 }

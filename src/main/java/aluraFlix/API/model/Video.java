@@ -48,4 +48,8 @@ public class Video {
         this.descricao = dto.descricao();
         this.url = dto.url();
     }
+
+    public void deletar() {
+        this.ativo = false;
+    }
 }
