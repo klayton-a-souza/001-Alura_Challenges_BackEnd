@@ -1,5 +1,6 @@
 package aluraFlix.API.controller;
 
+import aluraFlix.API.dto.AtualizarVideoDto;
 import aluraFlix.API.dto.CadastrarVideoDto;
 import aluraFlix.API.dto.VideoDto;
 import aluraFlix.API.exception.ValidacaoException;
@@ -8,6 +9,7 @@ import aluraFlix.API.service.VideoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -45,6 +47,16 @@ public class VideoController {
             Video video = videoService.detalhar(id_video);
             return ResponseEntity.ok(new VideoDto(video));
 
+        }catch (ValidacaoException exception){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping
+    @Transactional
+    public ResponseEntity atualizacaoParcial(@RequestBody @Valid AtualizarVideoDto dto){
+        try{
+            return ResponseEntity.ok(new AtualizarVideoDto(videoService.atualizacaoParcial(dto)));
         }catch (ValidacaoException exception){
             return ResponseEntity.notFound().build();
         }

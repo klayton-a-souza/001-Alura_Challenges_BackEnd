@@ -1,5 +1,6 @@
 package aluraFlix.API.service;
 
+import aluraFlix.API.dto.AtualizarVideoDto;
 import aluraFlix.API.dto.CadastrarVideoDto;
 import aluraFlix.API.dto.VideoDto;
 import aluraFlix.API.exception.ValidacaoException;
@@ -37,8 +38,19 @@ public class VideoService {
 
     public Video detalhar(Long id_video) {
         if(!videoRepository.existsById(id_video)){
-            throw new ValidacaoException("Não foi possivel encontrar ess vídeo no banco de dados");
+            throw new ValidacaoException("Não foi possivel encontrar esse vídeo no banco de dados");
         }
         return videoRepository.getReferenceById(id_video);
+    }
+
+    public Video atualizacaoParcial(AtualizarVideoDto dto) {
+        if(!videoRepository.existsById(dto.id_video())){
+            throw new ValidacaoException("Não foi possivel encontrar esses vídeo no banco de dados");
+        }
+
+        Video video = videoRepository.getReferenceById(dto.id_video());
+        video.atualizacaoParcial(dto);
+
+        return video;
     }
 }
