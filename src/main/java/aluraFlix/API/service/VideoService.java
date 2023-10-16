@@ -34,4 +34,8 @@ public class VideoService {
         return videoRepository.save(new Video(dto));
 
     }
+
+    public Video detalhar(Long id_video) {
+        return videoRepository.getReferenceById(id_video);
+    }
 }

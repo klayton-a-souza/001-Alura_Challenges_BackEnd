@@ -38,4 +38,13 @@ public class VideoController {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
+
+    @GetMapping("/{id_video}/")
+    public ResponseEntity detalhar(@PathVariable Long id_video){
+        try{
+            return ResponseEntity.ok(new VideoDto(videoService.detalhar(id_video)));
+        }catch (ValidacaoException exception){
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
