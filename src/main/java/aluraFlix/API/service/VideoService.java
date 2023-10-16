@@ -36,6 +36,9 @@ public class VideoService {
     }
 
     public Video detalhar(Long id_video) {
+        if(!videoRepository.existsById(id_video)){
+            throw new ValidacaoException("Não foi possivel encontrar ess vídeo no banco de dados");
+        }
         return videoRepository.getReferenceById(id_video);
     }
 }

@@ -42,7 +42,9 @@ public class VideoController {
     @GetMapping("/{id_video}/")
     public ResponseEntity detalhar(@PathVariable Long id_video){
         try{
-            return ResponseEntity.ok(new VideoDto(videoService.detalhar(id_video)));
+            Video video = videoService.detalhar(id_video);
+            return ResponseEntity.ok(new VideoDto(video));
+
         }catch (ValidacaoException exception){
             return ResponseEntity.notFound().build();
         }

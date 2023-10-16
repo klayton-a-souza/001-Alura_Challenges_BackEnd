@@ -37,10 +37,10 @@ class VideoControllerTest {
     private Video video;
     @Autowired
     private MockMvc mockMvc;
-
     @Mock
     private CadastrarVideoDto cadastrarVideoDto;
-
+    @Mock
+    private VideoDto videoDto;
 
 
     @Test
@@ -100,6 +100,35 @@ class VideoControllerTest {
 
         //ASSERT
         assertEquals(400,response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Deveria retornar código 200 para requisições que tentam detalhar um vídeo específico pelo id")
+    void cenarioDetalhar01() throws Exception {
+
+        Long id_video = 1l;
+
+        //ACT
+        MockHttpServletResponse response = mockMvc.perform(
+                get("/videos/{id_video}/",id_video)
+        ).andReturn().getResponse();
+        //ASSERT
+        assertEquals(200,response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Deveria retornar código 404")
+    void cenarioDetalhar02() throws Exception {
+        Long id_video = 1l;
+        given(videoService.detalhar(id_video)).willThrow(ValidacaoException.class);
+
+        //ACT
+        MockHttpServletResponse response = mockMvc.perform(
+                get("/videos/{id_video}/",id_video)
+
+        ).andReturn().getResponse();
+        //ASSERT
+        assertEquals(404,response.getStatus());
     }
 
 }
