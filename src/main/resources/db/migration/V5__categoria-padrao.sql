@@ -1,0 +1,1 @@
+insert into categorias (id_categoria,titulo,cor,ativo) values (1,'LIVRE','#FFFFFF',1);
