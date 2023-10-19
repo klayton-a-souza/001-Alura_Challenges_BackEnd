@@ -55,4 +55,13 @@ public class CategoriaService {
         categoria.atualizacaoParcial(dto);
         return categoria;
     }
+
+    public Categoria atualizacao(AtualizacaoCategoriaDto dto) {
+        if(!categoriaRepository.existsById(dto.id_categoria())){
+            throw new ValidacaoException("Essa categoria não esta cadastrada no banco de dados!");
+        }
+        Categoria categoria = categoriaRepository.getReferenceById(dto.id_categoria());
+        categoria.atualizacao(dto);
+        return categoria;
+    }
 }

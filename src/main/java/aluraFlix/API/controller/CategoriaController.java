@@ -61,4 +61,14 @@ public class CategoriaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
     }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizacao(@RequestBody @Valid AtualizacaoCategoriaDto dto){
+        try {
+            return ResponseEntity.ok(new AtualizacaoCategoriaDto(categoriaService.atualizacao(dto)));
+        }catch (ValidacaoException exception){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+        }
+    }
 }

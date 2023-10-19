@@ -36,4 +36,9 @@ public class Categoria {
             this.cor = dto.cor();
         }
     }
+
+    public void atualizacao(AtualizacaoCategoriaDto dto) {
+        this.titulo = dto.titulo();
+        this.cor = dto.cor();
+    }
 }
