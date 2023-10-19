@@ -40,9 +40,12 @@ public class CategoriaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid CadastrarCategoriaDto dto){
+    public ResponseEntity cadastrar(@RequestBody @Valid CadastrarCategoriaDto dto,
+                                    UriComponentsBuilder builder){
         try{
-            return ResponseEntity.ok(categoriaService.cadastrar(dto));
+            var uri = builder.path("/categorias/{id_categoria}/")
+                    .buildAndExpand(dto.id_categoria()).toUri();
+            return ResponseEntity.created(uri).body(categoriaService.cadastrar(dto));
         }catch (ValidacaoException exception){
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
