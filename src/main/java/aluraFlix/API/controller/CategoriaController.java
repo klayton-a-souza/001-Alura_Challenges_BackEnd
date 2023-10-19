@@ -1,5 +1,6 @@
 package aluraFlix.API.controller;
 
+import aluraFlix.API.dto.AtualizacaoCategoriaDto;
 import aluraFlix.API.dto.CadastrarCategoriaDto;
 import aluraFlix.API.dto.CategoriaDto;
 import aluraFlix.API.exception.ValidacaoException;
@@ -48,6 +49,16 @@ public class CategoriaController {
             return ResponseEntity.created(uri).body(categoriaService.cadastrar(dto));
         }catch (ValidacaoException exception){
             return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+
+    @PatchMapping
+    @Transactional
+    public ResponseEntity atualizacaoParcial(@RequestBody @Valid AtualizacaoCategoriaDto dto){
+        try {
+            return ResponseEntity.ok(new AtualizacaoCategoriaDto(categoriaService.atualizacaoParcial(dto)));
+        }catch (ValidacaoException exception){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
     }
 }

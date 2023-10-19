@@ -1,5 +1,6 @@
 package aluraFlix.API.service;
 
+import aluraFlix.API.dto.AtualizacaoCategoriaDto;
 import aluraFlix.API.dto.CadastrarCategoriaDto;
 import aluraFlix.API.dto.CategoriaDto;
 import aluraFlix.API.exception.ValidacaoException;
@@ -44,5 +45,14 @@ public class CategoriaService {
                 .stream()
                 .map(CategoriaDto::new)
                 .toList();
+    }
+
+    public Categoria atualizacaoParcial(AtualizacaoCategoriaDto dto) {
+        if(!categoriaRepository.existsById(dto.id_categoria())){
+            throw new ValidacaoException("Essa categoria não esta cadastrada no banco de dados!");
+        }
+        Categoria categoria = categoriaRepository.getReferenceById(dto.id_categoria());
+        categoria.atualizacaoParcial(dto);
+        return categoria;
     }
 }

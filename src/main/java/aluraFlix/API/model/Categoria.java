@@ -1,5 +1,6 @@
 package aluraFlix.API.model;
 
+import aluraFlix.API.dto.AtualizacaoCategoriaDto;
 import aluraFlix.API.dto.CadastrarCategoriaDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,5 +26,14 @@ public class Categoria {
         this.titulo = dto.titulo();
         this.cor = dto.cor();
         this.ativo = true;
+    }
+
+    public void atualizacaoParcial(AtualizacaoCategoriaDto dto) {
+        if(dto.titulo() != null){
+            this.titulo = dto.titulo();
+        }
+        if(dto.cor() != null){
+            this.cor = dto.cor();
+        }
     }
 }
