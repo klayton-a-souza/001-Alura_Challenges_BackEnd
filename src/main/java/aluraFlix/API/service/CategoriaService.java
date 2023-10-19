@@ -1,11 +1,14 @@
 package aluraFlix.API.service;
 
 import aluraFlix.API.dto.CadastrarCategoriaDto;
+import aluraFlix.API.dto.CategoriaDto;
 import aluraFlix.API.exception.ValidacaoException;
 import aluraFlix.API.model.Categoria;
 import aluraFlix.API.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CategoriaService {
@@ -33,5 +36,13 @@ public class CategoriaService {
         Categoria categoria = new Categoria(dto);
 
         return categoriaRepository.save(categoria);
+    }
+
+    public List<CategoriaDto> listar() {
+        return categoriaRepository
+                .findAll()
+                .stream()
+                .map(CategoriaDto::new)
+                .toList();
     }
 }

@@ -12,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("/categorias/")
 
 public class CategoriaController {
 
@@ -28,6 +30,12 @@ public class CategoriaController {
         }catch (ValidacaoException exception){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
+    }
+
+    @GetMapping
+    public ResponseEntity <List<CategoriaDto>> listar(){
+        List<CategoriaDto> categorias = categoriaService.listar();
+        return ResponseEntity.ok(categorias);
     }
 
     @PostMapping
