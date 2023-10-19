@@ -1,5 +1,6 @@
 package aluraFlix.API.model;
 
+import aluraFlix.API.dto.CadastrarCategoriaDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,4 +21,9 @@ public class Categoria {
     private String cor;
     private Boolean ativo;
 
+    public Categoria(CadastrarCategoriaDto dto) {
+        this.titulo = dto.titulo();
+        this.cor = dto.cor();
+        this.ativo = true;
+    }
 }

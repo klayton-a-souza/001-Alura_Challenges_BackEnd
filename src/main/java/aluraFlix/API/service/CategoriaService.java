@@ -1,5 +1,6 @@
 package aluraFlix.API.service;
 
+import aluraFlix.API.dto.CadastrarCategoriaDto;
 import aluraFlix.API.exception.ValidacaoException;
 import aluraFlix.API.model.Categoria;
 import aluraFlix.API.repository.CategoriaRepository;
@@ -20,5 +21,17 @@ public class CategoriaService {
 
         return categoriaRepository.getReferenceById(id_categoria);
 
+    }
+
+    public Categoria cadastrar(CadastrarCategoriaDto dto) {
+        boolean jaCadastrado = categoriaRepository.existsByTitulo(dto.titulo());
+
+        if(jaCadastrado){
+            throw new ValidacaoException("Essa categoria já esta cadastrada no banco de dados!");
+        }
+
+        Categoria categoria = new Categoria(dto);
+
+        return categoriaRepository.save(categoria);
     }
 }
