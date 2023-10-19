@@ -48,20 +48,31 @@ public class CategoriaService {
     }
 
     public Categoria atualizacaoParcial(AtualizacaoCategoriaDto dto) {
-        if(!categoriaRepository.existsById(dto.id_categoria())){
-            throw new ValidacaoException("Essa categoria não esta cadastrada no banco de dados!");
-        }
+        validar(dto.id_categoria());
+
         Categoria categoria = categoriaRepository.getReferenceById(dto.id_categoria());
         categoria.atualizacaoParcial(dto);
         return categoria;
     }
 
     public Categoria atualizacao(AtualizacaoCategoriaDto dto) {
-        if(!categoriaRepository.existsById(dto.id_categoria())){
-            throw new ValidacaoException("Essa categoria não esta cadastrada no banco de dados!");
-        }
+        validar(dto.id_categoria());
+
         Categoria categoria = categoriaRepository.getReferenceById(dto.id_categoria());
         categoria.atualizacao(dto);
         return categoria;
+    }
+
+    public void deletar(Long id_categoria) {
+        validar(id_categoria);
+
+        Categoria categoria = categoriaRepository.getReferenceById(id_categoria);
+        categoria.deletar();
+    }
+
+    private void validar(Long id_categoria) {
+        if(!categoriaRepository.existsById(id_categoria)){
+            throw new ValidacaoException("Essa categoria não esta cadastrada no banco de dados!");
+        }
     }
 }

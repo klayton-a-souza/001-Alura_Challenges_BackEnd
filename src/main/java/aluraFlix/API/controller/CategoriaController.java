@@ -71,4 +71,15 @@ public class CategoriaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
     }
+
+    @DeleteMapping("/{id_categoria}/")
+    @Transactional
+    public ResponseEntity deletar(@PathVariable @Valid Long id_categoria){
+        try {
+            categoriaService.deletar(id_categoria);
+            return ResponseEntity.noContent().build();
+        }catch (ValidacaoException exception){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+        }
+    }
 }

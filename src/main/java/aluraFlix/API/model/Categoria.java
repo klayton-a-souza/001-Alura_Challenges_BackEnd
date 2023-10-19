@@ -41,4 +41,8 @@ public class Categoria {
         this.titulo = dto.titulo();
         this.cor = dto.cor();
     }
+
+    public void deletar() {
+        this.ativo = false;
+    }
 }
