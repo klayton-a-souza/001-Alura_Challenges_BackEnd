@@ -4,7 +4,9 @@ import aluraFlix.API.dto.AtualizarVideoDto;
 import aluraFlix.API.dto.CadastrarVideoDto;
 import aluraFlix.API.dto.VideoDto;
 import aluraFlix.API.exception.ValidacaoException;
+import aluraFlix.API.model.Categoria;
 import aluraFlix.API.model.Video;
+import aluraFlix.API.repository.CategoriaRepository;
 import aluraFlix.API.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class VideoService {
     @Autowired
     private VideoRepository videoRepository;
 
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
     public List<VideoDto> listar(){
         return videoRepository
                 .findAll()
@@ -25,14 +30,26 @@ public class VideoService {
                 .toList();
     }
 
-    public Video cadastrar(CadastrarVideoDto dto) {
+    public void cadastrar(CadastrarVideoDto dto) {
         boolean jaCadastrado = videoRepository.existsByTituloOrDescricao(dto.titulo(),dto.descricao());
 
         if(jaCadastrado){
             throw new ValidacaoException("Dados já cadastrado no banco de dados!");
         }
+        System.out.println("Antes da categoria");
+        Categoria categoria = buscarCategoria(dto);
+        System.out.println("Depois da categoria");
+        Video video = new Video(dto,categoria);
+        System.out.println("Depois do video");
+        videoRepository.save(video);
+    }
 
-        return videoRepository.save(new Video(dto));
+    private Categoria buscarCategoria(CadastrarVideoDto dto) {
+        if(dto.id_categoria() == null){
+            return categoriaRepository.getReferenceById(1l);
+        }else {
+            return categoriaRepository.getReferenceById(dto.id_categoria());
+        }
 
     }
 

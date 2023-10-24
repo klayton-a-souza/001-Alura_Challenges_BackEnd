@@ -24,11 +24,23 @@ public class Video {
     private String url;
     private Boolean ativo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoria;
+
     public Video(CadastrarVideoDto dto) {
         this.titulo = dto.titulo();
         this.descricao = dto.descricao();
         this.url = dto.url();
         this.ativo = true;
+    }
+
+    public Video(CadastrarVideoDto dto, Categoria categoria) {
+        this.titulo = dto.titulo();
+        this.descricao = dto.descricao();
+        this.url = dto.url();
+        this.ativo = true;
+        this.categoria = categoria;
     }
 
     public void atualizacaoParcial(AtualizarVideoDto dto) {

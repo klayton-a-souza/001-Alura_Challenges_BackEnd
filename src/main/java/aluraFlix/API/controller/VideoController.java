@@ -34,7 +34,8 @@ public class VideoController {
     public ResponseEntity cadastrar(@RequestBody @Valid CadastrarVideoDto dto, UriComponentsBuilder builder){
         try {
             var uri = builder.path("/videos{id_video").buildAndExpand(dto.id_video()).toUri();
-            return ResponseEntity.created(uri).body(videoService.cadastrar(dto));
+            videoService.cadastrar(dto);
+            return ResponseEntity.created(uri).body("Vídeo cadastrado com sucesso!");
         }catch (ValidacaoException exception){
             return ResponseEntity.badRequest().body(exception.getMessage());
         }

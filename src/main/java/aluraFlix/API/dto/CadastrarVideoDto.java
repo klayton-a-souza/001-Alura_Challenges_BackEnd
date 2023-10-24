@@ -12,8 +12,6 @@ public record CadastrarVideoDto(
         String descricao,
         @NotBlank
         @URL
-        String url) {
-    public CadastrarVideoDto(Video video) {
-        this(video.getId_video(), video.getTitulo(), video.getDescricao(), video.getUrl());
-    }
+        String url,
+        Long id_categoria) {
 }
