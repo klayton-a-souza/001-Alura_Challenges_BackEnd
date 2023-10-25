@@ -19,4 +19,9 @@ public interface VideoRepository extends JpaRepository<Video,Long> {
             v.categoria.id_categoria = :id_categoria
             """)
     List<VideoDto> bucasrVideoPorCategoria(Long id_categoria);
+
+
+    Video findByTitulo(String titulo);
+
+    boolean existsByTitulo(String titulo);
 }

@@ -81,4 +81,14 @@ public class VideoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/")
+    public ResponseEntity videoPorTitulo(@RequestParam(value ="search") String titulo){
+        try{
+            return ResponseEntity.ok(new VideoDto(videoService.buscarPeloTitulo(titulo)));
+        }catch (ValidacaoException exception){
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 }

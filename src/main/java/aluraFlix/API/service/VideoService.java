@@ -94,4 +94,13 @@ public class VideoService {
         }
         return true;
     }
+
+    public Video buscarPeloTitulo(String titulo) {
+        if(!videoRepository.existsByTitulo(titulo)){
+            throw new ValidacaoException("Não foi possivel encontra um vídeo com esse titulo");
+        }else {
+            return videoRepository.findByTitulo(titulo);
+        }
+
+    }
 }
