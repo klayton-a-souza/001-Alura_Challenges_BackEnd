@@ -3,6 +3,7 @@ package aluraFlix.API.controller;
 import aluraFlix.API.dto.AtualizacaoCategoriaDto;
 import aluraFlix.API.dto.CadastrarCategoriaDto;
 import aluraFlix.API.dto.CategoriaDto;
+import aluraFlix.API.dto.VideoDto;
 import aluraFlix.API.exception.ValidacaoException;
 import aluraFlix.API.service.CategoriaService;
 import jakarta.transaction.Transactional;
@@ -82,4 +83,11 @@ public class CategoriaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
     }
+
+    @GetMapping("{id_categoria}/videos")
+    public ResponseEntity <List<VideoDto>> videoPorCategoria(@PathVariable Long id_categoria){
+        return ResponseEntity.ok(categoriaService.videoPorCategoria(id_categoria));
+    }
+
+
 }

@@ -16,9 +16,10 @@ public record VideoDto(
         @URL
         String url,
         @NotNull
-        Boolean ativo) {
+        Boolean ativo,
+        Long id_categoria) {
 
         public VideoDto(Video video){
-                this(video.getId_video(), video.getTitulo(), video.getDescricao(), video.getUrl(), video.getAtivo());
+                this(video.getId_video(), video.getTitulo(), video.getDescricao(), video.getUrl(), video.getAtivo(), video.getCategoria().getId_categoria());
         }
 }
