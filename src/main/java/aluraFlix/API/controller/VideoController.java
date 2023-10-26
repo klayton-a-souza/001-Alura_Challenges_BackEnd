@@ -9,6 +9,8 @@ import aluraFlix.API.service.VideoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -24,8 +26,8 @@ public class VideoController {
     private VideoService videoService;
 
     @GetMapping
-    public ResponseEntity <List<VideoDto>> listar(){
-        List<VideoDto> videos = videoService.listar();
+    public ResponseEntity <List<VideoDto>> listar(@PageableDefault (size = 5) Pageable paginacao){
+        List<VideoDto> videos = videoService.listar(paginacao);
         return ResponseEntity.ok(videos);
     }
 

@@ -9,6 +9,8 @@ import aluraFlix.API.model.Categoria;
 import aluraFlix.API.repository.CategoriaRepository;
 import aluraFlix.API.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,9 +46,9 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    public List<CategoriaDto> listar() {
+    public List<CategoriaDto> listar(Pageable paginacao) {
         return categoriaRepository
-                .findAll()
+                .findAll(paginacao)
                 .stream()
                 .map(CategoriaDto::new)
                 .toList();

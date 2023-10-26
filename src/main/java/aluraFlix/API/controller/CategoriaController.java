@@ -9,6 +9,8 @@ import aluraFlix.API.service.CategoriaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,16 +29,15 @@ public class CategoriaController {
     @GetMapping("/{id_categoria}/")
     public ResponseEntity detalhar(@PathVariable Long id_categoria){
         try{
-            var categoria = categoriaService.detalhar(id_categoria);
-            return ResponseEntity.ok(new CategoriaDto(categoria));
+            return ResponseEntity.ok(new CategoriaDto(categoriaService.detalhar(id_categoria)));
         }catch (ValidacaoException exception){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
     }
 
     @GetMapping
-    public ResponseEntity <List<CategoriaDto>> listar(){
-        List<CategoriaDto> categorias = categoriaService.listar();
+    public ResponseEntity <List<CategoriaDto>> listar(@PageableDefault (size = 1) Pageable paginacao){
+        List<CategoriaDto> categorias = categoriaService.listar(paginacao);
         return ResponseEntity.ok(categorias);
     }
 
