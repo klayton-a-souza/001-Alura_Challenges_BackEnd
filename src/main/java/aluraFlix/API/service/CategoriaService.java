@@ -36,14 +36,11 @@ public class CategoriaService {
 
     public Categoria cadastrar(CadastrarCategoriaDto dto) {
         boolean jaCadastrado = categoriaRepository.existsByTitulo(dto.titulo());
-
         if(jaCadastrado){
             throw new ValidacaoException("Essa categoria já esta cadastrada no banco de dados!");
         }
 
-        Categoria categoria = new Categoria(dto);
-
-        return categoriaRepository.save(categoria);
+        return categoriaRepository.save(new Categoria(dto));
     }
 
     public List<CategoriaDto> listar(Pageable paginacao) {

@@ -36,15 +36,15 @@ public class CategoriaController {
     }
 
     @GetMapping
-    public ResponseEntity <List<CategoriaDto>> listar(@PageableDefault (size = 1) Pageable paginacao){
+    public ResponseEntity <List<CategoriaDto>> listar(@PageableDefault (size = 5) Pageable paginacao){
         List<CategoriaDto> categorias = categoriaService.listar(paginacao);
         return ResponseEntity.ok(categorias);
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid CadastrarCategoriaDto dto,
-                                    UriComponentsBuilder builder){
+    public ResponseEntity cadastrar(@RequestBody @Valid CadastrarCategoriaDto dto
+            ,UriComponentsBuilder builder){
         try{
             var uri = builder.path("/categorias/{id_categoria}/")
                     .buildAndExpand(dto.id_categoria()).toUri();

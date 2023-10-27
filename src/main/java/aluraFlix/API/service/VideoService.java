@@ -31,18 +31,14 @@ public class VideoService {
                 .toList();
     }
 
-    public void cadastrar(CadastrarVideoDto dto) {
+    public Video cadastrar(CadastrarVideoDto dto) {
         boolean jaCadastrado = videoRepository.existsByTituloOrDescricao(dto.titulo(),dto.descricao());
-
         if(jaCadastrado){
             throw new ValidacaoException("Dados já cadastrado no banco de dados!");
         }
-        System.out.println("Antes da categoria");
+
         Categoria categoria = buscarCategoria(dto);
-        System.out.println("Depois da categoria");
-        Video video = new Video(dto,categoria);
-        System.out.println("Depois do video");
-        videoRepository.save(video);
+        return videoRepository.save(new Video(dto,categoria));
     }
 
     private Categoria buscarCategoria(CadastrarVideoDto dto) {
