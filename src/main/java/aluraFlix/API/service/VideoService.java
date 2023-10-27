@@ -50,7 +50,6 @@ public class VideoService {
         validar(dto.id_video());
         Video video = videoRepository.getReferenceById(dto.id_video());
         video.atualizacaoParcial(dto);
-
         return video;
     }
 

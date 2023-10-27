@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -47,6 +48,7 @@ public class VideoController {
     @GetMapping("/{id_video}/")
     public ResponseEntity detalhar(@PathVariable Long id_video){
         try{
+            //return ResponseEntity.ok().build();
             return ResponseEntity.ok(new VideoDto(videoService.detalhar(id_video)));
         }catch (ValidacaoException exception){
             return ResponseEntity.notFound().build();
