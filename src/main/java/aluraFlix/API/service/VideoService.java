@@ -41,6 +41,37 @@ public class VideoService {
         return videoRepository.save(new Video(dto,categoria));
     }
 
+    public Video detalhar(Long id_video) {
+        validar(id_video);
+        return videoRepository.getReferenceById(id_video);
+    }
+
+    public Video atualizacaoParcial(AtualizarVideoDto dto) {
+        validar(dto.id_video());
+        Video video = videoRepository.getReferenceById(dto.id_video());
+        video.atualizacaoParcial(dto);
+
+        return video;
+    }
+
+    public Video atualizacao(AtualizarVideoDto dto) {
+        validar(dto.id_video());
+        Video video = videoRepository.getReferenceById(dto.id_video());
+        video.atualizacao(dto);
+        return video;
+    }
+
+    public void deletar(Long id_video) {
+        validar(id_video);
+        Video video = videoRepository.getReferenceById(id_video);
+        video.deletar();
+    }
+
+    private void validar(Long id_video){
+        if(!videoRepository.existsById(id_video)){
+            throw new ValidacaoException("Não foi possivel encontrar esse vídeo no banco de dados");
+        }
+    }
     private Categoria buscarCategoria(CadastrarVideoDto dto) {
         if(dto.id_categoria() == null){
             return categoriaRepository.getReferenceById(1l);
@@ -49,49 +80,6 @@ public class VideoService {
         }
 
     }
-
-    public Video detalhar(Long id_video) {
-        if(!videoRepository.existsById(id_video)){
-            throw new ValidacaoException("Não foi possivel encontrar esse vídeo no banco de dados");
-        }
-        return videoRepository.getReferenceById(id_video);
-    }
-
-    public Video atualizacaoParcial(AtualizarVideoDto dto) {
-        if(!videoRepository.existsById(dto.id_video())){
-            throw new ValidacaoException("Não foi possivel encontrar esses vídeo no banco de dados");
-        }
-
-        Video video = videoRepository.getReferenceById(dto.id_video());
-        video.atualizacaoParcial(dto);
-
-        return video;
-    }
-
-    public Video atualizacao(AtualizarVideoDto dto) {
-        if(!videoRepository.existsById(dto.id_video())){
-            throw new ValidacaoException("Não foi possivel encontrar esses vídeo no banco de dados");
-        }
-        Video video = videoRepository.getReferenceById(dto.id_video());
-        video.atualizacao(dto);
-        return video;
-    }
-
-    public void deletar(Long id_video) {
-        if(validar(id_video)){
-            throw new ValidacaoException("Não foi possivel encontrar esses vídeo no banco de dados");
-        }
-        Video video = videoRepository.getReferenceById(id_video);
-        video.deletar();
-    }
-
-    private Boolean validar(Long id_video){
-        if(videoRepository.existsById(id_video)){
-            return false;
-        }
-        return true;
-    }
-
     public Video buscarPeloTitulo(String titulo) {
         if(!videoRepository.existsByTitulo(titulo)){
             throw new ValidacaoException("Não foi possivel encontra um vídeo com esse titulo");
