@@ -4,6 +4,7 @@ import aluraFlix.API.model.Usuario;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -13,10 +14,11 @@ import java.util.Date;
 
 @Service
 public class TokenService {
-
+    @Value("${api.security.token.secret}")
+    private String secret;
     public String gerarToken(Usuario usuario){
         try {
-            var algoritimo = Algorithm.HMAC256("12345678");
+            var algoritimo = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("API AluraFlix") //Nome da api
                     .withSubject(usuario.getLogin()) //Pegando o login do usuario
