@@ -1,6 +1,9 @@
 package aluraFlix.API.controller;
 
 import aluraFlix.API.dto.autenticacao.AutenticacaoDto;
+import aluraFlix.API.dto.autenticacao.TokenJWTDto;
+import aluraFlix.API.model.Usuario;
+import aluraFlix.API.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +20,15 @@ public class AutenticacaoController {
 
     @Autowired
     private AuthenticationManager manager;
+    @Autowired
+    private TokenService tokenService;
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid AutenticacaoDto dto){
-        var token = new UsernamePasswordAuthenticationToken(dto.login(),dto.senha());
-        var authentication = manager.authenticate(token);
-        return ResponseEntity.ok().build();
+
+        var authenticationToken = new UsernamePasswordAuthenticationToken(dto.login(),dto.senha());
+        var authentication = manager.authenticate(authenticationToken);
+        var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+
+        return ResponseEntity.ok(new TokenJWTDto(tokenJWT));
     }
 }
