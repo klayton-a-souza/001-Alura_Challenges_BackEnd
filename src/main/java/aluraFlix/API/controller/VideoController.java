@@ -48,8 +48,8 @@ public class VideoController {
     @GetMapping("/{id_video}/")
     public ResponseEntity detalhar(@PathVariable Long id_video){
         try{
-            //return ResponseEntity.ok().build();
-            return ResponseEntity.ok(new VideoDto(videoService.detalhar(id_video)));
+            var video = videoService.detalhar(id_video);
+            return ResponseEntity.ok(video);
         }catch (ValidacaoException exception){
             return ResponseEntity.notFound().build();
         }
@@ -59,7 +59,8 @@ public class VideoController {
     @Transactional
     public ResponseEntity atualizacaoParcial(@RequestBody @Valid AtualizarVideoDto dto){
         try{
-            return ResponseEntity.ok(new AtualizarVideoDto(videoService.atualizacaoParcial(dto)));
+            var video = videoService.atualizacaoParcial(dto);
+            return ResponseEntity.ok(video);
         }catch (ValidacaoException exception){
             return ResponseEntity.notFound().build();
         }
@@ -68,7 +69,7 @@ public class VideoController {
     @Transactional
     public ResponseEntity atualizacao(@RequestBody @Valid AtualizarVideoDto dto){
         try{
-            return ResponseEntity.ok(new AtualizarVideoDto(videoService.atualizacao(dto)));
+            return ResponseEntity.ok(videoService.atualizacao(dto));
         }catch (ValidacaoException exception){
             return ResponseEntity.notFound().build();
         }
@@ -88,7 +89,8 @@ public class VideoController {
     @GetMapping("/")
     public ResponseEntity videoPorTitulo(@RequestParam(value ="search") String titulo){
         try{
-            return ResponseEntity.ok(new VideoDto(videoService.buscarPeloTitulo(titulo)));
+            var video = videoService.buscarPeloTitulo(titulo);
+            return ResponseEntity.ok(video);
         }catch (ValidacaoException exception){
             return ResponseEntity.notFound().build();
         }
