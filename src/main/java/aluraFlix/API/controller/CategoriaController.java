@@ -29,7 +29,8 @@ public class CategoriaController {
     @GetMapping("/{id_categoria}/")
     public ResponseEntity detalhar(@PathVariable Long id_categoria){
         try{
-            return ResponseEntity.ok(new CategoriaDto(categoriaService.detalhar(id_categoria)));
+            var categoria = categoriaService.detalhar(id_categoria);
+            return ResponseEntity.ok(categoria);
         }catch (ValidacaoException exception){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
@@ -58,7 +59,8 @@ public class CategoriaController {
     @Transactional
     public ResponseEntity atualizacaoParcial(@RequestBody @Valid AtualizacaoCategoriaDto dto){
         try {
-            return ResponseEntity.ok(new AtualizacaoCategoriaDto(categoriaService.atualizacaoParcial(dto)));
+            var categoria = categoriaService.atualizacaoParcial(dto);
+            return ResponseEntity.ok(categoria);
         }catch (ValidacaoException exception){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
@@ -68,7 +70,8 @@ public class CategoriaController {
     @Transactional
     public ResponseEntity atualizacao(@RequestBody @Valid AtualizacaoCategoriaDto dto){
         try {
-            return ResponseEntity.ok(new AtualizacaoCategoriaDto(categoriaService.atualizacao(dto)));
+            var categoria = categoriaService.atualizacao(dto);
+            return ResponseEntity.ok(categoria);
         }catch (ValidacaoException exception){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
@@ -87,7 +90,8 @@ public class CategoriaController {
 
     @GetMapping("{id_categoria}/videos")
     public ResponseEntity <List<VideoDto>> videoPorCategoria(@PathVariable Long id_categoria){
-        return ResponseEntity.ok(categoriaService.videoPorCategoria(id_categoria));
+        var lista = categoriaService.videoPorCategoria(id_categoria);
+        return ResponseEntity.ok(lista);
     }
 
 
