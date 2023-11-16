@@ -9,7 +9,7 @@ A plataforma deve permitir ao usuário montar playlists com links para seus víd
 
 ## Status do projeto
 <h4 align="center"> 
-    :construction:  Projeto em construção  :construction:
+    :construction:  Projeto finalizado  :construction:
 </h4>
 
 ## Etapas
